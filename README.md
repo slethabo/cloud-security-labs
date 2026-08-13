@@ -14,7 +14,7 @@ Each lab entry follows a standard technical post-mortem:
 - Scenario & Architecture: Target environment setup and starting context.
 - Reconnaissance & Enumeration: Commands, scans, and initial asset discovery.
 - Exploitation / Findings: Identified misconfigurations and attack paths.
--Impact & Remediation: Root-cause analysis, policy fixes, and CLI mitigation steps.
+- Impact & Remediation: Root-cause analysis, policy fixes, and CLI mitigation steps.
 Key Takeaways: Practical security engineering lessons.
 
 
