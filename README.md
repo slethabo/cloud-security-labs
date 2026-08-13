@@ -15,7 +15,7 @@ Each lab entry follows a standard technical post-mortem:
 - Reconnaissance & Enumeration: Commands, scans, and initial asset discovery.
 - Exploitation / Findings: Identified misconfigurations and attack paths.
 - Impact & Remediation: Root-cause analysis, policy fixes, and CLI mitigation steps.
-Key Takeaways: Practical security engineering lessons.
+
 
 
 Author
