@@ -23,12 +23,9 @@ Through these labs, I am developing practical experience in:
 ## PwnedLabs
 
 | Lab | Focus | Status |
-|---|---|---|
-| Lab 01 | AWS / Cloud Security | ✅ Completed |
-| Lab 02 | IAM / Enumeration | 🔄 In Progress |
-| Lab 03 | Cloud Attack Path | 🔄 In Progress |
-
-> Write-ups focus on methodology, technical findings, security impact, and remediation rather than simply documenting challenge answers.
+| Lab 01  AWS / Cloud Security |  Completed |
+| Lab 02 IAM / Enumeration  In Progress |
+| Lab 03 Cloud Attack Path In Progress |
 
 ## Tools & Technologies
 
