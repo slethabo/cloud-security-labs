@@ -5,8 +5,6 @@ A collection of hands-on cloud security labs and technical write-ups documenting
 
 These labs are completed in authorized training environments such as PwnedLabs and are used to develop practical cloud security skills.
 
----
-
 ## Objectives
 
 Through these labs, I am developing practical experience in:
@@ -22,8 +20,6 @@ Through these labs, I am developing practical experience in:
 - Linux and networking
 - Cloud security remediation
 
----
-
 ## PwnedLabs
 
 | Lab | Focus | Status |
@@ -33,8 +29,6 @@ Through these labs, I am developing practical experience in:
 | Lab 03 | Cloud Attack Path | 🔄 In Progress |
 
 > Write-ups focus on methodology, technical findings, security impact, and remediation rather than simply documenting challenge answers.
-
----
 
 ## Tools & Technologies
 
@@ -47,8 +41,6 @@ Through these labs, I am developing practical experience in:
 **Systems:** Linux · Kali Linux · Windows
 
 **Programming:** Python · Bash · SQL
-
----
 
 ## Key Areas of Learning
 
@@ -74,10 +66,8 @@ Through these labs, I am developing practical experience in:
 - Credential remediation
 - Security monitoring
 - Cloud security controls
-
----
-
-## 🔐 Lab Methodology
+  
+## Lab Methodology
 
 For each lab, I document:
 
@@ -91,15 +81,11 @@ For each lab, I document:
 8. Remediation
 9. Lessons learned
 
----
-
 ##  Progress
 
 This repository is continuously updated as I complete additional cloud security labs and projects.
 
 My goal is to develop practical skills that bridge **offensive security, cloud security, and security engineering**.
-
----
 
 ## Author
 
