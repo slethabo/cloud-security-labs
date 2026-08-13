@@ -1,91 +1,23 @@
+*Cloud Security Labs*
+Hands-on cloud security labs and technical write-ups covering AWS security, cloud penetration testing, IAM analysis, and incident response.
 
-# Cloud Security Labs
+All environments are simulated or authorized training platforms
 
-A collection of hands-on cloud security labs and technical write-ups documenting my development in **AWS security, cloud penetration testing, IAM, incident response, and security engineering**.
+*Technical Coverage*
+- Cloud & IAM: AWS (IAM, S3, Lambda, Systems Manager, CloudTrail, CloudWatch), least-privilege analysis, credential exposure
+- Offensive Security: Cloud reconnaissance, IAM enumeration, privilege escalation paths, misconfiguration exploitation.
+- Defensive & Ops: Log analysis, incident response, vulnerability remediation, Linux networking, Security Hub monitoring.
+- Tooling: AWS CLI, Prowler, Nmap, Burp Suite, WireGuard, Python (boto3), Bash.
 
-These labs are completed in authorized training environments such as PwnedLabs and are used to develop practical cloud security skills.
+  Write-Up Structure
+Each lab entry follows a standard technical post-mortem:
+Scenario & Architecture: Target environment setup and starting context.
+Reconnaissance & Enumeration: Commands, scans, and initial asset discovery.
+Exploitation / Findings: Identified misconfigurations and attack paths.
+Impact & Remediation: Root-cause analysis, policy fixes, and CLI mitigation steps.
+Key Takeaways: Practical security engineering lessons.
 
-## Objectives
+Author
+Lethabo Sangweni
 
-Through these labs, I am developing practical experience in:
-
-- AWS security
-- IAM enumeration and security
-- Cloud reconnaissance
-- Cloud misconfigurations
-- Privilege escalation
-- Attack-path analysis
-- Incident response
-- Security monitoring
-- Linux and networking
-- Cloud security remediation
-
-## PwnedLabs
-
-| Lab | Focus | Status |
-| Lab 01  AWS / Cloud Security |  Completed |
-| Lab 02 IAM / Enumeration  In Progress |
-| Lab 03 Cloud Attack Path In Progress |
-
-## Tools & Technologies
-
-**Cloud:** AWS · IAM · CloudTrail · CloudWatch
-
-**Security:** Penetration Testing · Vulnerability Assessment · Incident Response
-
-**Tools:** AWS CLI · Nmap · Burp Suite · Wireshark · Gobuster
-
-**Systems:** Linux · Kali Linux · Windows
-
-**Programming:** Python · Bash · SQL
-
-## Key Areas of Learning
-
-### AWS Security
-- IAM
-- Access keys
-- Permissions
-- CloudTrail
-- Cloud networking
-- S3 security
-- Security monitoring
-
-### Offensive Security
-- Reconnaissance
-- Enumeration
-- Vulnerability identification
-- Attack paths
-- Privilege escalation
-
-### Defensive Security
-- Log analysis
-- Incident investigation
-- Credential remediation
-- Security monitoring
-- Cloud security controls
-  
-## Lab Methodology
-
-For each lab, I document:
-
-1. Objective
-2. Environment
-3. Reconnaissance
-4. Enumeration
-5. Findings
-6. Attack path
-7. Security impact
-8. Remediation
-9. Lessons learned
-
-##  Progress
-
-This repository is continuously updated as I complete additional cloud security labs and projects.
-
-My goal is to develop practical skills that bridge **offensive security, cloud security, and security engineering**.
-
-## Author
-
-**Lethabo Sangweni**
-
-Computer Science | Cloud Security | Penetration Testing | Security Engineering
+Computer Science | Cloud Security & Penetration Testing
